@@ -42,7 +42,7 @@ _Lưu ý_
 
 3.  Thêm các thư viện vào dự án backend nếu cần
 
-- Trong ứng dụng mẫu server-shelf flutter đẫ sử dụng các thư viện shelf và shelf-router trong tệp` pubspec.yaml`
+- Trong ứng dụng mẫu server-shelf flutter đẫ sử dụng các thư viện shelf và shelf-router trong tệp`pubspec.yaml`
 - Có thể xem thư viện khác ở pub.dev
 
 ### Bước 3 : Tạo ứng dụng frontend bằng Flutter framework
@@ -180,5 +180,16 @@ void main(List<String> args) async {
 ```
 
 2. Debug backend và kiểm thử với Postman
+
+3.Thêm Middleware xử lý CORS cho backend
+
+- **CORS là gì ?** CORS (Cross-origin rescource sharing) là 1 cơ chế bảo mật được các trình duyệt web sử dụng để ngăn chặn các trang web gửi yêu cầu đến 1 domain khác với domain của trang hiện tại. Điều này nhằm bảo vệ người dùng khỏi các cuộc tấn công CSRF (Cross-Site Request Forgery) và các mối đe doạ bảo mật khác.
+- **Vì sao cần thêm CORS middleware?** Khi frontend (Flutter Web) gửi yêu cầu HTTP đến backend trên 1 domain khác trình duyệt web sẽ chặn yêu cầu do vi phạm chính sách cùng nguồn gốc (Same-Origin Policy) . Các yêu cầu từ Flutter Web ( chạy tren localhost:8081 ) đến server backend ( chạy trên localhost:8080 ) sẽ bị chặn nếu server không xử lý đúng các header CORS. Trình duyệt sẽ gửi 1 yêu cầu OPTIONS (Preflight Request) để kiểm tra xem server có cho phép không. Nếu server không phản hồi đúng, yêu cầu chính sẽ không được gửi.
+- **Giaỉ pháp** : Thêm Middleware xử lý CORS vào server backend để xử lý các yêu cầu từ OPTIONS bằng cách trả về các header CORS cần thiết. Thêm các header CORS vào tất cả các phản hồi từ server để trình duyệt cho phép giao tiếp giữa frontend và backend.
+- Cập nhật mã nguồn hàm main của server:
+
+```dart
+
+```
 
 ### Bước 7 : Phát triển frontend và tích hợp hệ thống
